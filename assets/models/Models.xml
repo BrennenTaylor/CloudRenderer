@@ -1,0 +1,3 @@
+<Models>
+    <Mesh relativeFilename="Plane.obj" meshName="unit-plane" computeNormals="true"></Mesh>
+</Models>

@@ -1,0 +1,6 @@
+#ifndef CONSTANTS_HLSL
+#define CONSTANTS_HLSL
+
+#define F_PI 3.14159265359
+
+#endif
