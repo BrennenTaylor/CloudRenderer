@@ -1,5 +1,3 @@
-find_package(FMath REQUIRED)
-
 add_library(World
     AreaLight.h
     AreaLight.cpp

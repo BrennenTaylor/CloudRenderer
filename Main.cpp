@@ -11,7 +11,6 @@
 
 int main(int argc, char** argv)
 {
-    // Main game object. This should likely be a singleton.
     Farlor::Game game;
 
     const std::filesystem::path currentPath = std::filesystem::current_path();
