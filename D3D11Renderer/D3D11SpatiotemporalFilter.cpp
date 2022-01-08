@@ -432,7 +432,7 @@ namespace Farlor
 
         // Clear HDR Image Buffer
         {
-            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/ClearHDRStructuredBuffer.hlsl");
+            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/hlsl/ClearHDRStructuredBuffer.hlsl");
             Microsoft::WRL::ComPtr<ID3DBlob> shaderBlob = nullptr;
             Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
             D3D_SHADER_MACRO macros[] =
@@ -464,7 +464,7 @@ namespace Farlor
 
         // Path Tracer CS
         {
-            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/CloudTrace.hlsl");
+            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/hlsl/CloudTrace.hlsl");
             Microsoft::WRL::ComPtr<ID3DBlob> shaderBlob = nullptr;
             Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
             D3D_SHADER_MACRO macros[] =
@@ -496,7 +496,7 @@ namespace Farlor
 
         // G-Buffer VS
         {
-            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/STD_GeometryDeferred.hlsl");
+            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/hlsl/STD_GeometryDeferred.hlsl");
             Microsoft::WRL::ComPtr<ID3DBlob> shaderBlob = nullptr;
             Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
             result = D3DCompileFromFile(filename.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VSMain", "vs_5_0", 0, 0, shaderBlob.GetAddressOf(), errorBlob.GetAddressOf());
@@ -542,7 +542,7 @@ namespace Farlor
 
         // G-Buffer PS
         {
-            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/STD_GeometryDeferred.hlsl");
+            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/hlsl/STD_GeometryDeferred.hlsl");
             Microsoft::WRL::ComPtr<ID3DBlob> shaderBlob = nullptr;
             Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
             result = D3DCompileFromFile(filename.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PSMain", "ps_5_0", 0, 0, shaderBlob.GetAddressOf(), errorBlob.GetAddressOf());
@@ -568,7 +568,7 @@ namespace Farlor
 
         // Tonemapping VS
         {
-            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/TonemappingPass.hlsl");
+            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/hlsl/TonemappingPass.hlsl");
             Microsoft::WRL::ComPtr<ID3DBlob> shaderBlob = nullptr;
             Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
             result = D3DCompileFromFile(filename.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "VSMain", "vs_5_0", 0, 0, shaderBlob.GetAddressOf(), errorBlob.GetAddressOf());
@@ -594,7 +594,7 @@ namespace Farlor
 
         // Tonemapping PS
         {
-            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/TonemappingPass.hlsl");
+            std::wstring filename = Utility::StringUtil::StringToWideString(m_resourceDir) + std::wstring(L"/shaders/hlsl/TonemappingPass.hlsl");
             Microsoft::WRL::ComPtr<ID3DBlob> shaderBlob = nullptr;
             Microsoft::WRL::ComPtr<ID3DBlob> errorBlob = nullptr;
             result = D3DCompileFromFile(filename.c_str(), 0, D3D_COMPILE_STANDARD_FILE_INCLUDE, "PSMain", "ps_5_0", 0, 0, shaderBlob.GetAddressOf(), errorBlob.GetAddressOf());

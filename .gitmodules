@@ -10,3 +10,6 @@
 [submodule "DirectXTK"]
 	path = DirectXTK
 	url = https://github.com/microsoft/DirectXTK
+[submodule "DirectXMath"]
+	path = DirectXMath
+	url = https://github.com/microsoft/DirectXMath

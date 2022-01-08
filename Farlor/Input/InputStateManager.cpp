@@ -18,7 +18,7 @@ namespace Farlor
     {
     }
 
-    const InputState& InputStateManager::GetFrameInput() const
+    InputState* InputStateManager::GetFrameInput()
     {
         // Get controller input
         PollControllers();

@@ -1,0 +1,32 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "MSVC",
+            "displayName": "Visual Studio 2019 - amd64",
+            "description": "Using compilers for Visual Studio 16 2019 (x64 architecture)",
+            "generator": "Visual Studio 16 2019",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "/EHsc",
+                "BUILD_GMOCK" : "OFF",
+                "BUILD_TESTING" : "OFF",
+                "BUILD_TOOLS" : "OFF",
+                "BUILD_XAUDIO_WIN7" : "OFF",
+                "BUILD_XAUDIO_WIN8" : "OFF"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "Debug",
+            "configurePreset": "MSVC",
+            "configuration": "debug"
+        },
+        {
+            "name": "Release",
+            "configurePreset": "MSVC",
+            "configuration": "release"
+        }
+    ]
+}

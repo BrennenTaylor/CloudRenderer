@@ -15,7 +15,7 @@ namespace Farlor
         ~InputStateManager();
 
         // This returns a structure containing all the input we need since the last frame
-        const InputState& GetFrameInput() const;
+        InputState* GetFrameInput();
 
         // Update Input States
         void SetKeyboardState(uint32_t keyboardButtonIndex, bool isDown);

@@ -53,7 +53,7 @@ namespace Farlor
         IGraphicsBackend::BackendGraphicsHandle backendHandle = m_pGraphicsBackend->RegisterGeometry(m_agnosticGeometry[m_nextAgnosticGeometryHandle]);
         if (backendHandle == IGraphicsBackend::InvalidBackendGraphicsHandle)
         {
-            // TODO: Ensure this bad case is logged
+            // TODO: Ensure this bad ce is logged
         }
         m_rendererGeomIdToBackendGeomId.insert(std::make_pair(m_nextAgnosticGeometryHandle, backendHandle));
 
