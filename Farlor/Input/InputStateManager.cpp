@@ -108,10 +108,14 @@ namespace Farlor
 
     void InputStateManager::Tick()
     {
-        InputState& writeInputState = m_inputStates[m_writeInputStateIdx];
-        const InputState& readInputState = m_inputStates[m_readInputStateIdx];
+        // Rotate to the next input state
+        m_writeInputStateIdx = (m_writeInputStateIdx + 1) % NumBufferedInputStates;
+        m_readInputStateIdx = (m_readInputStateIdx + 1) % NumBufferedInputStates;
 
+        InputState& writeInputState = m_inputStates[m_writeInputStateIdx];
         writeInputState.Clear();
+
+        const InputState& readInputState = m_inputStates[m_readInputStateIdx];
 
         // Get controller input
         PollControllers();
@@ -138,9 +142,6 @@ namespace Farlor
         //        writeInputState.m_ppControllerButtonStates[i][j].numHalfSteps = 0;
         //    }
         //}
-
-        m_writeInputStateIdx = (m_writeInputStateIdx + 1) % NumBufferedInputStates;
-        m_readInputStateIdx = (m_readInputStateIdx + 1) % NumBufferedInputStates;
     }
 
     void InputStateManager::SetKeyboardState(uint32_t keyboardButtonIndex, bool isDown)
