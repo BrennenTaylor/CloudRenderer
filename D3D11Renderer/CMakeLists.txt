@@ -1,6 +1,5 @@
 add_library(D3D11SpatiotemporalFilter
     D3D11SpatiotemporalFilter.cpp
-
     D3D11SpatiotemporalFilter.h
     PathTracerCbs.h
     RenderPasses.h
@@ -24,15 +23,3 @@ target_link_libraries(D3D11SpatiotemporalFilter
     D3D11Utils
     GraphicsBackendLoader
 )
-
-# target_link_libraries(D3D11SpatiotemporalFilter
-#     optimized  C:/DevEnv/vcpkg/installed/x64-windows/lib/DirectXTK.lib
-# )
-
-# target_link_libraries(D3D11SpatiotemporalFilter
-#     debug  C:/DevEnv/vcpkg/installed/x64-windows/debug/lib/DirectXTK.lib
-# )
-
-# target_include_directories(D3D11SpatiotemporalFilter
-#     PUBLIC ${DIRECTXTK_INCLUDE_DIR}
-# )

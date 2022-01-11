@@ -2,7 +2,7 @@
 
 #include "FixedUpdate.h"
 
-#include <InputStateManager.h>
+#include <Input/InputStateManager.h>
 #include <Renderer.h>
 
 #include <Timer.h>
@@ -39,7 +39,7 @@ private:
 
         std::unique_ptr<Renderer> m_upRenderer;
         std::unique_ptr<IGraphicsBackend> m_upGraphicsBackend;
-        std::unique_ptr<CameraManager> m_upCameraManager;
+        CameraManager m_cameraManager;
 
         std::string m_resourceDir;
 

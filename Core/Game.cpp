@@ -9,7 +9,7 @@
 #include "../Log.h"
 
 #include <D3D11SpatiotemporalFilter.h>
-#include <InputStateManager.h>
+#include <Input/InputStateManager.h>
 #include <ObjMesh.h>
 #include <IWindow.h>
 #include <Transform.h>
@@ -31,7 +31,7 @@ namespace Farlor
         , m_upGameTimer{nullptr}
         , m_upRenderer(nullptr)
         , m_upGraphicsBackend(nullptr)
-        , m_upCameraManager(nullptr)
+        , m_cameraManager()
         , m_resourceDir{ "" }
         , m_nextGameObjectId{0}
         , m_gameObjectNameLookup{}
@@ -197,8 +197,7 @@ namespace Farlor
         m_upGameTimer = std::make_unique<Farlor::Timer>();
 
         // This needs to be generalized for other render types
-        m_upCameraManager = std::make_unique<CameraManager>();
-        m_upRenderer = std::make_unique<Renderer>(*m_upCameraManager, m_resourceDir);
+        m_upRenderer = std::make_unique<Renderer>(m_cameraManager, m_resourceDir);
 
         float windowScale = 0.5f;
         const int width = 1920 * windowScale;
@@ -216,8 +215,8 @@ namespace Farlor
         std::unique_ptr<Camera> upCamera = std::make_unique<Camera>();
         const float fovInRad = 0.785398f * 2; // 45 degrees
         upCamera->SetLens(fovInRad, width / height, 1.0f, 1000.0f);
-        m_upCameraManager->RegisterCamera(std::string("Debug"), std::move(upCamera));
-        m_upCameraManager->SetMainCamera(std::string("Debug"));
+        m_cameraManager.RegisterCamera(std::string("Debug"), std::move(upCamera));
+        m_cameraManager.SetMainCamera(std::string("Debug"));
         return true;
     }
 
@@ -409,7 +408,7 @@ namespace Farlor
                 };
             }
 
-            Camera* pCurrentCam = m_upCameraManager->GetCurrentCamera();
+            Camera* pCurrentCam = m_cameraManager.GetCurrentCamera();
             if (pCurrentCam)
             {
                 pCurrentCam->Update(deltaTime, pFrameInput);

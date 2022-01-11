@@ -1,7 +1,7 @@
 #pragma once
 
 #include <FMath/FMath.h>
-#include <InputState.h>
+#include <Input/InputState.h>
 
 #include <DirectXMath.h>
 
@@ -26,21 +26,21 @@ namespace Farlor
         void UpdateViewMatrix();
         void UpdateProjMatrix();
 
-        inline const Vector3& GetWorldPosition() const
+        inline const Vector3 GetWorldPosition() const
         {
             XMFLOAT4 worldPos;
             XMStoreFloat4(&worldPos, camPosition);
             return Farlor::Vector3(worldPos.x, worldPos.y, worldPos.z);
         }
 
-        inline const Vector3& GetWorldTarget() const
+        inline const Vector3 GetWorldTarget() const
         {
             XMFLOAT4 worldPos;
             XMStoreFloat4(&worldPos, camTarget);
             return Farlor::Vector3(worldPos.x, worldPos.y, worldPos.z);
         }
 
-        inline const Vector3& GetWorldUp() const
+        inline const Vector3 GetWorldUp() const
         {
             XMFLOAT4 worldPos;
             XMStoreFloat4(&worldPos, camUp);
@@ -69,22 +69,6 @@ namespace Farlor
         }
 
     private:
-        //Vector3 m_worldPosition;
-        //Vector3 m_worldTarget;
-
-        //// World coord system
-        //Vector3 m_worldRight;
-        //Vector3 m_worldUp;
-        //Vector3 m_worldForward;
-
-        //// Local camera coord system
-        //Vector3 m_camRight;
-        //Vector3 m_camUp;
-        //Vector3 m_camForward;
-
-        //float m_yaw;
-        //float m_pitch;
-
         XMVECTOR DefaultForward = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
         XMVECTOR DefaultRight = XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);
         XMVECTOR camPosition = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
@@ -109,9 +93,6 @@ namespace Farlor
         float m_zFar;
         float m_aspect;
         float m_fov; // In radians
-
-        //// Stored values for the matrices
-        //Matrix4x4 m_rotationMatrix;
 
         Matrix4x4 m_view;
         Matrix4x4 m_proj;

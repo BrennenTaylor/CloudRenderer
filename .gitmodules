@@ -1,15 +1,6 @@
-[submodule "FMath"]
-	path = FMath
-	url = https://github.com/BrennenTaylor/FMath
 [submodule "tinyobjloader"]
 	path = tinyobjloader
 	url = https://github.com/tinyobjloader/tinyobjloader
 [submodule "tinyxml2"]
 	path = tinyxml2
 	url = https://github.com/leethomason/tinyxml2
-[submodule "DirectXTK"]
-	path = DirectXTK
-	url = https://github.com/microsoft/DirectXTK
-[submodule "DirectXMath"]
-	path = DirectXMath
-	url = https://github.com/microsoft/DirectXMath

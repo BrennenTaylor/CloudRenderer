@@ -39,7 +39,7 @@ target_include_directories(GraphicsBackendLoader
 )
 
 target_link_libraries(GraphicsBackendLoader
-    Input
+    FarlorEngine
     Utils
     WindowFactory
     World

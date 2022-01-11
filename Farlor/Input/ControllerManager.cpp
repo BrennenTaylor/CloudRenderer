@@ -1,7 +1,5 @@
 #include "ControllerManager.h"
 
-using namespace std;
-
 namespace Farlor
 {
     ControllerManager::ControllerManager()
@@ -19,98 +17,22 @@ namespace Farlor
         SetVibration(3, 0.0f, 0.0f);
     }
 
-    void ControllerManager::PollConnections()
+    void ControllerManager::Poll()
     {
         for (uint32_t controllerNum = 0; controllerNum < XUSER_MAX_COUNT; controllerNum++)
         {
             XINPUT_STATE state = { 0 };
-            auto result = XInputGetState(controllerNum, &state);
+            HRESULT result = XInputGetState(controllerNum, &state);
             if (result == ERROR_SUCCESS)
             {
                 m_connectionStatus[controllerNum] = true;
+                m_polledStates[index] = state;
             }
             else
             {
                 m_connectionStatus[controllerNum] = false;
             }
         }
-    }
-
-    void ControllerManager::PollState(uint32_t index)
-    {
-        DWORD result;
-        XINPUT_STATE state = { 0 };
-        result = XInputGetState(index, &state);
-
-        if (result != ERROR_SUCCESS)
-        {
-            m_connectionStatus[index] = false;
-            return;
-        }
-
-        m_polledStates[index] = state;
-
-        /*
-        // Left Stick
-        float LX = state.Gamepad.sThumbLX;
-        float LY = state.Gamepad.sThumbLY;
-
-        float magnitudeLH = sqrt(LX*LX + LY*LY);
-
-        float normalizedLX = LX / magnitudeLH;
-        float normalizedLY = LY / magnitudeLH;
-
-        float normalizedMagnitudeLH;
-
-        if (magnitudeLH > XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE)
-        {
-            if (magnitudeLH > 32767)
-                magnitudeLH = 32767;
-
-            magnitudeLH -= XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE;
-
-            // Optionally normailze the magnitudeLH with respect to expected range
-            // gets 0.0f - 1.0f
-            normalizedMagnitudeLH = magnitudeLH / (32767 - XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
-        }
-        else
-        {
-            magnitudeLH = 0.0f;
-            normalizedMagnitudeLH = 0.0f;
-            normalizedLX = 0.0f;
-            normalizedLY = 0.0f;
-        }
-
-        // Right Stick
-        float RX = state.Gamepad.sThumbRX;
-        float RY = state.Gamepad.sThumbRY;
-
-        float magnitudeRH = sqrt(RX*RX + RY*RY);
-
-        float normalizedRX = RX / magnitudeRH;
-        float normalizedRY = RY / magnitudeRH;
-
-        float normalizedMagnitudeRH;
-
-        if (magnitudeRH > XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE)
-        {
-            if (magnitudeRH > 32767)
-                magnitudeRH = 32767;
-
-            magnitudeRH -= XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE;
-
-            // Optionally normailze the magnitudeRH with respect to expected range
-            // gets 0.0f - 1.0f
-            normalizedMagnitudeRH = magnitudeRH / (32767 - XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-        }
-        else
-        {
-            magnitudeRH = 0.0f;
-            normalizedMagnitudeRH = 0.0f;
-            normalizedRX = 0.0f;
-            normalizedRY = 0.0f;
-        }
-        */
     }
 
     bool ControllerManager::IsConnected(uint32_t controllerIndex) const

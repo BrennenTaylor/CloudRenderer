@@ -1,25 +1,47 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.19)
 
 project (CloudRenderer)
 
+include(FetchContent)
+
+# In this example we are picking a specific tag.
+# You can also pick a specific commit, if you need to.
+FetchContent_Declare(GSL
+    GIT_REPOSITORY "https://github.com/microsoft/GSL"
+    GIT_TAG "v3.1.0"
+)
+FetchContent_MakeAvailable(GSL)
+
+# In this example we are picking a specific tag.
+# You can also pick a specific commit, if you need to.
+FetchContent_Declare(DirectXMath
+    GIT_REPOSITORY "https://github.com/microsoft/DirectXMath"
+    GIT_TAG "jan2021"
+)
+FetchContent_MakeAvailable(DirectXMath)
+
+FetchContent_Declare(DirectXTK
+    GIT_REPOSITORY "https://github.com/microsoft/DirectXTK"
+    GIT_TAG "nov2021b"
+)
+FetchContent_MakeAvailable(DirectXTK)
+
+FetchContent_Declare(FMath
+    GIT_REPOSITORY "https://github.com/BrennenTaylor/FMath"
+)
+FetchContent_MakeAvailable(FMath)
+
+FetchContent_Declare(tinyxml2
+    GIT_REPOSITORY "https://github.com/leethomason/tinyxml2"
+)
+FetchContent_MakeAvailable(tinyxml2)
+
+FetchContent_Declare(tinyobjloader
+    GIT_REPOSITORY "https://github.com/tinyobjloader/tinyobjloader"
+)
+FetchContent_MakeAvailable(tinyobjloader)
+
 find_package(Vulkan REQUIRED FATAL_ERROR)
-
-if (DEFINED VCPKG_TOOLCHAIN)
-    set (VCPKG_TOOLCHAIN_SAVED ${VCPKG_TOOLCHAIN})
-    unset(VCPKG_TOOLCHAIN)
-endif()
-
-add_subdirectory(DirectXMath)
-add_subdirectory(DirectXTK)
-
-if (DEFINED VCPKG_TOOLCHAIN_SAVED)
-    set (VCPKG_TOOLCHAIN ${VCPKG_TOOLCHAIN_SAVED})
-    unset(VCPKG_TOOLCHAIN_SAVED)
-endif()
-
-add_subdirectory(FMath)
-add_subdirectory(tinyobjloader)
-add_subdirectory(tinyxml2)
 
 add_subdirectory(Farlor)
 
@@ -46,7 +68,7 @@ target_include_directories(CloudRenderer
 
 target_link_libraries(CloudRenderer
     PUBLIC FMath::FMath
-    PUBLIC Farlor::Input
+    PUBLIC FarlorEngine
     PUBLIC Farlor::Utils
     PUBLIC Farlor::WindowFactory
     PUBLIC Farlor::World
@@ -59,3 +81,5 @@ target_link_libraries(CloudRenderer
 target_compile_options(CloudRenderer
     PRIVATE /std:c++17
 )
+
+add_subdirectory(tools)
