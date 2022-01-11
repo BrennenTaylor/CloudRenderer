@@ -26,7 +26,7 @@ namespace Farlor
             if (result == ERROR_SUCCESS)
             {
                 m_connectionStatus[controllerNum] = true;
-                m_polledStates[index] = state;
+                m_polledStates[controllerNum] = state;
             }
             else
             {

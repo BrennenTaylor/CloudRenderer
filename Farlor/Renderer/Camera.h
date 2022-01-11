@@ -1,7 +1,7 @@
 #pragma once
 
 #include <FMath/FMath.h>
-#include <Input/InputState.h>
+#include <Input/InputStateManager.h>
 
 #include <DirectXMath.h>
 
@@ -19,7 +19,7 @@ namespace Farlor
         // Sets projection matrix parameters
         void SetLens(float fovY, float aspect, float zNear, float zFar);
 
-        void Update(float dt, const InputState* pInputState);
+        void Update(float dt, const InputState& inputState);
 
         // Updates based on yaw, pitch and roll
         // This should be called after yaw, pitch and roll values are set

@@ -357,6 +357,7 @@ namespace Farlor
         while(m_running)
         {
             m_upGameTimer->Tick();
+            m_upInputStateManager->Tick();
 
             float deltaTime = m_upGameTimer->DeltaTimeInSeconds();
 
@@ -382,14 +383,14 @@ namespace Farlor
             m_pGameWindow->ProcessEvent();
 
             // At this point, we can only read the input
-            const InputState* const pFrameInput = m_upInputStateManager->GetFrameInput();
+            const InputState& latestInputState = m_upInputStateManager->GetLatestInputState();
 
-            if (pFrameInput->m_pKeyboardButtonStates[KeyboardButtons::Escape].endedDown)
+            if (latestInputState.m_keyboardButtonStates[KeyboardButtons::Escape].endedDown)
             {
                 m_running = false;
             }
 
-            if (pFrameInput->m_pKeyboardButtonStates[KeyboardButtons::UpArrow].endedDown)
+            if (latestInputState.m_keyboardButtonStates[KeyboardButtons::UpArrow].endedDown)
             {
                 const uint32_t NumScenes = 2;
                 currentSceneIndex++;
@@ -411,7 +412,7 @@ namespace Farlor
             Camera* pCurrentCam = m_cameraManager.GetCurrentCamera();
             if (pCurrentCam)
             {
-                pCurrentCam->Update(deltaTime, pFrameInput);
+                pCurrentCam->Update(deltaTime, latestInputState);
             }
 
             static float totalTime = 0.0f;

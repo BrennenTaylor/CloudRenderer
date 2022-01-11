@@ -2,10 +2,25 @@
     "version": 3,
     "configurePresets": [
         {
-            "name": "MSVC",
+            "name": "MSVC19",
             "displayName": "Visual Studio 2019 - amd64",
             "description": "Using compilers for Visual Studio 16 2019 (x64 architecture)",
             "generator": "Visual Studio 16 2019",
+            "binaryDir": "${sourceDir}/build/",
+            "cacheVariables": {
+                "CMAKE_CXX_FLAGS": "/EHsc",
+                "BUILD_GMOCK" : "OFF",
+                "BUILD_TESTING" : "OFF",
+                "BUILD_TOOLS" : "OFF",
+                "BUILD_XAUDIO_WIN7" : "OFF",
+                "BUILD_XAUDIO_WIN8" : "OFF"
+            }
+        },
+        {
+            "name": "MSVC22",
+            "displayName": "Visual Studio 2022 - amd64",
+            "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
+            "generator": "Visual Studio 17 2022",
             "binaryDir": "${sourceDir}/build/",
             "cacheVariables": {
                 "CMAKE_CXX_FLAGS": "/EHsc",
@@ -19,13 +34,23 @@
     ],
     "buildPresets": [
         {
-            "name": "Debug",
-            "configurePreset": "MSVC",
+            "name": "Debug19",
+            "configurePreset": "MSVC19",
             "configuration": "debug"
         },
         {
-            "name": "Release",
-            "configurePreset": "MSVC",
+            "name": "Release19",
+            "configurePreset": "MSVC19",
+            "configuration": "release"
+        },
+        {
+            "name": "Debug22",
+            "configurePreset": "MSVC22",
+            "configuration": "debug"
+        },
+        {
+            "name": "Release22",
+            "configurePreset": "MSVC22",
             "configuration": "release"
         }
     ]

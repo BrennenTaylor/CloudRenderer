@@ -4,6 +4,8 @@
 #include "KeyboardButton.h"
 #include "MouseButton.h"
 
+#include "ControllerManager.h"
+
 #include <FMath/FMath.h>
 
 #include <vector>
@@ -87,6 +89,8 @@ namespace Farlor
     {
         bool endedDown = false;
         uint32_t numHalfSteps = 0;
+
+        void Reset();
     };
 
     struct InputState
@@ -96,13 +100,15 @@ namespace Farlor
         ButtonState m_mouseLeft;
         ButtonState m_mouseRight;
 
-        ButtonState m_pMouseButtonStates[MouseButtons::NumMouseButtons];
+        std::array<ButtonState, MouseButtons::NumMouseButtons> m_mouseButtonStates;
 
         // Keyboard State
-        ButtonState m_pKeyboardButtonStates[KeyboardButtons::NumKeyboardButtons];
+        std::array <ButtonState, KeyboardButtons::NumKeyboardButtons> m_keyboardButtonStates;
 
         // Simply allow one controller atm
         std::array<ControllerState, MaxControllerCount> m_controllerStates;
+
+        void Clear();
     };
 
     class InputStateManager
@@ -112,9 +118,12 @@ namespace Farlor
         ~InputStateManager();
 
         // This returns a structure containing all the input we need since the last frame
-        const InputState& GetInput() {
+        const InputState& GetLatestInputState() {
             return m_inputStates[m_readInputStateIdx];
         }
+
+        // Called once per frame
+        void Tick();
 
         // Update Input States
         void SetKeyboardState(uint32_t keyboardButtonIndex, bool isDown);
@@ -130,6 +139,6 @@ namespace Farlor
         uint32_t m_writeInputStateIdx = 0;
         uint32_t m_readInputStateIdx = NumBufferedInputStates - 1;
 
-        std::unique_ptr<ControllerManager> m_upControllerManager = nullptr;
+        ControllerManager m_controllerManager;
     };
 }

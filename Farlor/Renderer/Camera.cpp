@@ -1,7 +1,8 @@
 #include "Camera.h"
 
+
+
 #include <DirectXMath.h>
-using namespace DirectX;
 
 namespace Farlor
 {
@@ -34,65 +35,57 @@ namespace Farlor
         UpdateProjMatrix();
     }
 
-    void Camera::Update(float dt, const InputState* pInputState)
+    void Camera::Update(float dt, const InputState& inputState)
     {
         m_movedInFrame = false;
 
         const float moveSpeed = 1000.0f;
 
         // Should move right
-        if (pInputState->m_pKeyboardButtonStates[KeyboardButtons::D].endedDown)
+        if (inputState.m_keyboardButtonStates[KeyboardButtons::D].endedDown)
         {
             m_movedInFrame = true;
             moveLeftRight += moveSpeed * dt;
         }
 
         // Should move left
-        if (pInputState->m_pKeyboardButtonStates[KeyboardButtons::A].endedDown)
+        if (inputState.m_keyboardButtonStates[KeyboardButtons::A].endedDown)
         {
             m_movedInFrame = true;
             moveLeftRight -= moveSpeed * dt;
         }
 
         // Should move up
-        if (pInputState->m_pKeyboardButtonStates[KeyboardButtons::Shift].endedDown)
+        if (inputState.m_keyboardButtonStates[KeyboardButtons::Shift].endedDown)
         {
             m_movedInFrame = true;
             moveUpDown += moveSpeed * 5.0f * dt;
         }
 
         // Should move down
-        if (pInputState->m_pKeyboardButtonStates[KeyboardButtons::Ctrl].endedDown)
+        if (inputState.m_keyboardButtonStates[KeyboardButtons::Ctrl].endedDown)
         {
             m_movedInFrame = true;
             moveUpDown -= moveSpeed * 5.0f * dt;
         }
 
         // Should move forward
-        if (pInputState->m_pKeyboardButtonStates[KeyboardButtons::W].endedDown)
+        if (inputState.m_keyboardButtonStates[KeyboardButtons::W].endedDown)
         {
             m_movedInFrame = true;
             moveBackForward += moveSpeed * dt;
         }
 
         // Should move back
-        if (pInputState->m_pKeyboardButtonStates[KeyboardButtons::S].endedDown)
+        if (inputState.m_keyboardButtonStates[KeyboardButtons::S].endedDown)
         {
             m_movedInFrame = true;
             moveBackForward -= moveSpeed * dt;
         }
 
         // Unused as of now, camera can simply strafe
-        if (pInputState->m_end.x != 0.0f)
-        {
-            camYaw += pInputState->m_end.x * 0.001f;
-            //std::cout << m_yaw << std::endl;
-        }
-
-        if (pInputState->m_end.y != 0.0f)
-        {
-            camPitch += pInputState->m_end.y * 0.001f;
-        }
+        camYaw += inputState.m_mouseUpdateDelta.x * 0.001f;
+        camPitch += inputState.m_mouseUpdateDelta.y * 0.001f;
             
         UpdateViewMatrix();
     }

@@ -15,10 +15,7 @@ namespace Farlor
         ~ControllerManager();
 
         // Polls every controller state and checks if any have connected or disconnected
-        void PollConnections();
-        // Polls controller input and converts any changes in state as events
-        // Disconnects controller if that case is detected
-        void PollState(uint32_t controllerIndex);
+        void Poll();
 
         // Return true if the specified controller is connected
         // If it is not connected, the polled input is not valid

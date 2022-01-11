@@ -6,13 +6,11 @@ add_library(FarlorEngine
 
     Input/ControllerManager.cpp
     Input/InputProcessor.cpp
-    Input/InputState.cpp
     Input/InputStateManager.cpp
 
     Input/Buttons.h
     Input/ControllerButton.h
     Input/InputProcessor.h
-    Input/InputState.h
     Input/InputStateManager.h
     Input/KeyboardButton.h
     Input/KeyCodes.h
