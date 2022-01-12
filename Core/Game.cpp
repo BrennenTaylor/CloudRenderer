@@ -8,6 +8,8 @@
 
 #include "../Log.h"
 
+#include "btBulletDynamicsCommon.h"
+
 #include <D3D11SpatiotemporalFilter.h>
 #include <Input/InputStateManager.h>
 #include <ObjMesh.h>
@@ -353,6 +355,87 @@ namespace Farlor
         uint32_t currentSceneIndex = 0;
         // We want to initialize the cloud scene.
         LoadSceneFarlor("Cornell.xml");
+
+
+
+        // Initialize physics stuff
+        std::unique_ptr<btDefaultCollisionConfiguration> upCollisionConfiguration = std::make_unique<btDefaultCollisionConfiguration>();
+        std::unique_ptr<btCollisionDispatcher> upDispatcher = std::make_unique<btCollisionDispatcher>(upCollisionConfiguration.get());
+        std::unique_ptr <btBroadphaseInterface> upOverlappingPairCache = std::make_unique<btDbvtBroadphase>();
+        std::unique_ptr<btSequentialImpulseConstraintSolver> upSolver = std::make_unique<btSequentialImpulseConstraintSolver>();
+        std::unique_ptr<btDiscreteDynamicsWorld> upDynamicsWorld = std::make_unique<btDiscreteDynamicsWorld>(
+            upDispatcher.get(), upOverlappingPairCache.get(), upSolver.get(), upCollisionConfiguration.get()
+        );
+        upDynamicsWorld->setGravity(btVector3(0.0f, -9.81f, 0.0f));
+
+        btAlignedObjectArray<btCollisionShape*> collisionShapes;
+
+        // Creating ground plane
+        {
+            btCollisionShape* pGroundShape = new btBoxShape(btVector3(50.0f, 50.0f, 50.0f));
+            collisionShapes.push_back(pGroundShape);
+
+            btTransform groundTransform;
+            groundTransform.setIdentity();
+            groundTransform.setOrigin(btVector3(0.0f, -56.0f, 0.0f));
+
+            btScalar mass(0.0f);
+
+            bool isDynamic = (mass != 0.0f);
+            btVector3 localInertia(0.0f, 0.0f, 0.0f);
+            if (isDynamic)
+            {
+                pGroundShape->calculateLocalInertia(mass, localInertia);
+            }
+
+            btRigidBody::btRigidBodyConstructionInfo rbInfo(mass, nullptr, pGroundShape, localInertia);
+            btRigidBody* pBody = new btRigidBody(rbInfo);
+            upDynamicsWorld->addRigidBody(pBody);
+        }
+
+        // Creating Sphere
+        {
+            btCollisionShape* pSphereShape = new btSphereShape(1.0f);
+            collisionShapes.push_back(pSphereShape);
+
+            btTransform startingTransform;
+            startingTransform.setIdentity();
+
+            btScalar sphereMass(1.0f);
+
+            bool isDynamic = (sphereMass != 0.0f);
+            btVector3 localInertia(0.0f, 0.0f, 0.0f);
+            if (isDynamic)
+            {
+                pSphereShape->calculateLocalInertia(sphereMass, localInertia);
+            }
+            startingTransform.setOrigin(btVector3(2.0f, 10.0f, 0.0f));
+
+            btRigidBody::btRigidBodyConstructionInfo rbInfo(sphereMass, nullptr, pSphereShape, localInertia);
+            btRigidBody* pBody = new btRigidBody(rbInfo);
+            upDynamicsWorld->addRigidBody(pBody);
+        }
+
+        for (int simStepIdx = 0; simStepIdx < 150; simStepIdx++)
+        {
+            upDynamicsWorld->stepSimulation(1.0f / 60.0f, 10);
+
+            for (int objIdx = upDynamicsWorld->getNumCollisionObjects() - 1; objIdx >= 0; objIdx--)
+            {
+                btCollisionObject* pObj = upDynamicsWorld->getCollisionObjectArray()[objIdx];
+                btRigidBody* pBody = btRigidBody::upcast(pObj);
+                btTransform trans;
+                if (pBody && pBody->getMotionState())
+                {
+                    pBody->getMotionState()->getWorldTransform(trans);
+                }
+                else
+                {
+                    trans = pObj->getWorldTransform();
+                }
+                printf("World Pos Object %d = %f, %f, %f\n", objIdx, trans.getOrigin().getX(), trans.getOrigin().getY(), trans.getOrigin().getZ());
+            }
+        }
 
         while(m_running)
         {

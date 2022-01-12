@@ -96,6 +96,11 @@ add_executable(CloudRenderer
 
 target_include_directories(CloudRenderer
     PUBLIC ${GLM_INCLUDE_DIRS}
+    PUBLIC ${BULLET_INCLUDE_DIRS}
+)
+
+target_link_directories(CloudRenderer
+    PUBLIC ${BULLET_LIBRARY_DIRS}
 )
 
 target_link_libraries(CloudRenderer
@@ -108,8 +113,11 @@ target_link_libraries(CloudRenderer
     PUBLIC tinyxml2::tinyxml2
     PUBLIC tinyobjloader
     PRIVATE Vulkan::Vulkan
+    PUBLIC BulletSoftBody
+    PUBLIC BulletDynamics
+    PUBLIC BulletCollision
     PUBLIC Bullet3Common
-    PUBLIC Bullet3Collision
+    PUBLIC LinearMath
 )
 
 target_compile_options(CloudRenderer
